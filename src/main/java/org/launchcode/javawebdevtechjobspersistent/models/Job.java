@@ -3,23 +3,25 @@ package org.launchcode.javawebdevtechjobspersistent.models;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Job extends AbstractEntity {
 
-    @ManyToOne
     @NotNull(message = "Employer is required.")
+    @ManyToOne
     private Employer employer;
 
-    private String skills;
+    @NotNull(message = "Skills are required.")
+    @ManyToMany
+    private List<Skill> skills;
 
     public Job() {
     }
 
-    public Job(Employer anEmployer, String someSkills) {
-        super();
+    public Job(Employer anEmployer, List<Skill> skills) {
         this.employer = anEmployer;
-        this.skills = someSkills;
+        this.skills = skills;
     }
 
     // Getters and setters.
@@ -28,15 +30,15 @@ public class Job extends AbstractEntity {
         this.employer = employer;
     }
 
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-
     public Employer getEmployer() {
         return employer;
     }
 
-    public String getSkills() {
+    public List<Skill> getSkills() {
         return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
 }
